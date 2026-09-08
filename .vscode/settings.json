@@ -1,0 +1,4 @@
+{
+    "python.defaultInterpreterPath": "C:/Tools/msys64/ucrt64/bin/python.exe",
+    "python-envs.defaultEnvManager": "ms-python.python:system"
+}
