@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 
 set(CMAKE_C_COMPILER "gcc" CACHE STRING "UCRT64 GCC compiler")
+# TODO::schaitbe: Check path settings of UCRT64 based gcc for what is really required. 
 #set(CMAKE_C_COMPILER "/c/Tools/msys64/ucrt64/bin/gcc.exe" CACHE FILEPATH "UCRT64 GCC compiler")
 
 project(UVSC64Mock LANGUAGES C)
