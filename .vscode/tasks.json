@@ -13,12 +13,12 @@
                 "-G",
                 "Ninja",
                 "-DCMAKE_BUILD_TYPE=Debug",
-                "-DCMAKE_C_COMPILER=gcc"
+                "-DCMAKE_CXX_COMPILER=g++"
             ],
             "options": {
                 "cwd": "${workspaceFolder}",
                 "env": {
-                    "PATH": "C:\\Tools\\msys64\\ucrt64\\bin;C:\\Tools\\msys64\\usr\\bin;${env:PATH}"
+                    "PATH": "C:/Tools/msys64/ucrt64/bin;C:/Tools/msys64/usr/bin;${env:PATH}"
                 },
                 "shell": {
                     "executable": "cmd.exe",
@@ -42,7 +42,7 @@
             "options": {
                 "cwd": "${workspaceFolder}",
                 "env": {
-                    "PATH": "C:\\Tools\\msys64\\ucrt64\\bin;C:\\Tools\\msys64\\usr\\bin;${env:PATH}"
+                    "PATH": "C:/Tools/msys64/ucrt64/bin;C:/Tools/msys64/usr/bin;${env:PATH}"
                 },
                 "shell": {
                     "executable": "cmd.exe",
@@ -58,11 +58,12 @@
         {
             "label": "CMake: Clean UVSC64Mock Build",
             "type": "shell",
-            "command": "cmd.exe",
+            "command": "cmake",
             "args": [
-                "/d",
-                "/c",
-                "if exist Infineon\\build\\uvsc64 rmdir /s /q Infineon\\build\\uvsc64"
+                "--build",
+                "Infineon/build/uvsc64",
+                "--target",
+                "clean"
             ],
             "options": {
                 "cwd": "${workspaceFolder}",

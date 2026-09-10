@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <iostream>
 
 #ifndef WIN32
 #define WIN32
@@ -33,6 +34,9 @@ static int valid_port_range(int min_port, int max_port) {
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved) {
+    std::cout << "Called DllMain (reason=" << ul_reason_for_call << ")" << std::endl;
+    (void) hModule;
+    (void) lpReserved;
     switch (ul_reason_for_call) {
         case DLL_PROCESS_ATTACH:
         case DLL_THREAD_ATTACH:
@@ -43,7 +47,12 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
     return TRUE;
 }
 
+// Prototypes are already declared in h-file correctly. 
+//extern "C" {
+
 UVSC_STATUS UVSC_Init(int uvMinPort, int uvMaxPort) {
+    std::cout << "Called UVSC_Init (uvMinPort=" << uvMinPort
+              << ", uvMaxPort=" << uvMaxPort << ")" << std::endl;
     if (!valid_port_range(uvMinPort, uvMaxPort)) {
         return UVSC_STATUS_INVALID_PARAM;
     }
@@ -58,6 +67,7 @@ UVSC_STATUS UVSC_Init(int uvMinPort, int uvMaxPort) {
 }
 
 UVSC_STATUS UVSC_UnInit(void) {
+    std::cout << "Called UVSC_UnInit ()" << std::endl;
     if (!g_initialized) {
         return UVSC_STATUS_NOT_INIT;
     }
@@ -80,6 +90,17 @@ UVSC_STATUS UVSC_OpenConnection(
     char *log_file_name,
     xBOOL log_file_append,
     log_cb log_callback) {
+    std::cout << "Called UVSC_OpenConnection (name=" << static_cast<void *>(name)
+              << ", connection_handle=" << static_cast<void *>(connection_handle)
+              << ", port=" << static_cast<void *>(port)
+              << ", uv_command=" << static_cast<void *>(uv_command)
+              << ", run_mode=" << run_mode
+              << ", callback=" << (callback != nullptr)
+              << ", callback_custom=" << callback_custom
+              << ", log_file_name=" << static_cast<void *>(log_file_name)
+              << ", log_file_append=" << static_cast<unsigned int>(log_file_append)
+              << ", log_callback=" << (log_callback != nullptr) << ")"
+              << std::endl;
     (void)name;
     (void)uv_command;
     (void)callback;
@@ -111,6 +132,9 @@ UVSC_STATUS UVSC_OpenConnection(
 }
 
 UVSC_STATUS UVSC_CloseConnection(int connection_handle, xBOOL terminate) {
+    std::cout << "Called UVSC_CloseConnection (connection_handle="
+              << connection_handle << ", terminate="
+              << static_cast<unsigned int>(terminate) << ")" << std::endl;
     (void)terminate;
 
     if (!valid_handle(connection_handle)) {
@@ -124,6 +148,8 @@ UVSC_STATUS UVSC_CloseConnection(int connection_handle, xBOOL terminate) {
 }
 
 UVSC_STATUS UVSC_DBG_ENTER(int connection_handle) {
+    std::cout << "Called UVSC_DBG_ENTER (connection_handle="
+              << connection_handle << ")" << std::endl;
     if (!valid_handle(connection_handle)) {
         return UVSC_STATUS_INVALID_PARAM;
     }
@@ -133,6 +159,8 @@ UVSC_STATUS UVSC_DBG_ENTER(int connection_handle) {
 }
 
 UVSC_STATUS UVSC_DBG_EXIT(int connection_handle) {
+    std::cout << "Called UVSC_DBG_EXIT (connection_handle="
+              << connection_handle << ")" << std::endl;
     if (!valid_handle(connection_handle)) {
         return UVSC_STATUS_INVALID_PARAM;
     }
@@ -145,6 +173,8 @@ UVSC_STATUS UVSC_DBG_EXIT(int connection_handle) {
 }
 
 UVSC_STATUS UVSC_DBG_START_EXECUTION(int connection_handle) {
+    std::cout << "Called UVSC_DBG_START_EXECUTION (connection_handle="
+              << connection_handle << ")" << std::endl;
     if (!valid_handle(connection_handle) || !g_debugging) {
         return UVSC_STATUS_INVALID_PARAM;
     }
@@ -154,6 +184,8 @@ UVSC_STATUS UVSC_DBG_START_EXECUTION(int connection_handle) {
 }
 
 UVSC_STATUS UVSC_DBG_STOP_EXECUTION(int connection_handle) {
+    std::cout << "Called UVSC_DBG_STOP_EXECUTION (connection_handle="
+              << connection_handle << ")" << std::endl;
     if (!valid_handle(connection_handle) || !g_debugging) {
         return UVSC_STATUS_INVALID_PARAM;
     }
@@ -163,6 +195,9 @@ UVSC_STATUS UVSC_DBG_STOP_EXECUTION(int connection_handle) {
 }
 
 UVSC_STATUS UVSC_DBG_STATUS(int connection_handle, int *status) {
+    std::cout << "Called UVSC_DBG_STATUS (connection_handle="
+              << connection_handle << ", status=" << static_cast<void *>(status)
+              << ")" << std::endl;
     if (!valid_handle(connection_handle) || status == NULL || !g_debugging) {
         return UVSC_STATUS_INVALID_PARAM;
     }
@@ -172,6 +207,8 @@ UVSC_STATUS UVSC_DBG_STATUS(int connection_handle, int *status) {
 }
 
 UVSC_STATUS UVSC_DBG_RESET(int connection_handle) {
+    std::cout << "Called UVSC_DBG_RESET (connection_handle="
+              << connection_handle << ")" << std::endl;
     if (!valid_handle(connection_handle) || !g_debugging) {
         return UVSC_STATUS_INVALID_PARAM;
     }
@@ -184,6 +221,9 @@ UVSC_STATUS UVSC_DBG_EXEC_CMD(
     int connection_handle,
     EXECCMD *command,
     int command_length) {
+    std::cout << "Called UVSC_DBG_EXEC_CMD (connection_handle="
+              << connection_handle << ", command=" << static_cast<void *>(command)
+              << ", command_length=" << command_length << ")" << std::endl;
     size_t command_size;
 
     if (!valid_handle(connection_handle) || !g_debugging ||
@@ -208,6 +248,9 @@ UVSC_STATUS UVSC_DBG_EXEC_CMD(
 UVSC_STATUS UVSC_GetCmdOutputSize(
     int connection_handle,
     int *command_output_size) {
+    std::cout << "Called UVSC_GetCmdOutputSize (connection_handle="
+              << connection_handle << ", command_output_size="
+              << static_cast<void *>(command_output_size) << ")" << std::endl;
     if (!valid_handle(connection_handle) || command_output_size == NULL) {
         return UVSC_STATUS_INVALID_PARAM;
     }
@@ -220,6 +263,11 @@ UVSC_STATUS UVSC_GetCmdOutput(
     int connection_handle,
     char *command_output,
     int command_output_length) {
+    std::cout << "Called UVSC_GetCmdOutput (connection_handle="
+              << connection_handle << ", command_output="
+              << static_cast<void *>(command_output)
+              << ", command_output_length=" << command_output_length << ")"
+              << std::endl;
     size_t output_size;
 
     if (!valid_handle(connection_handle) || command_output == NULL ||
@@ -235,3 +283,5 @@ UVSC_STATUS UVSC_GetCmdOutput(
     memcpy(command_output, g_command_output, output_size);
     return UVSC_STATUS_SUCCESS;
 }
+
+//}

@@ -1,13 +1,11 @@
 cmake_minimum_required(VERSION 3.20)
 
-set(CMAKE_C_COMPILER "gcc" CACHE STRING "UCRT64 GCC compiler")
-# TODO::schaitbe: Check path settings of UCRT64 based gcc for what is really required. 
-#set(CMAKE_C_COMPILER "/c/Tools/msys64/ucrt64/bin/gcc.exe" CACHE FILEPATH "UCRT64 GCC compiler")
+set(CMAKE_CXX_COMPILER "g++" CACHE STRING "UCRT64 G++ compiler")
 
-project(UVSC64Mock LANGUAGES C)
+project(UVSC64Mock LANGUAGES CXX)
 
 add_library(UVSC64Mock SHARED
-    UvControlPy/uvctrl/keil_uvsc/UVSC64Mock.c
+    UvControlPy/uvctrl/keil_uvsc/UVSC64Mock.cpp
 )
 
 target_include_directories(UVSC64Mock PRIVATE
@@ -28,5 +26,9 @@ if(MSVC)
     target_compile_options(UVSC64Mock PRIVATE /W4)
 else()
     target_compile_options(UVSC64Mock PRIVATE -Wall -Wextra)
-    target_link_options(UVSC64Mock PRIVATE -static-libgcc)
+    # TODO::fschaitb: Seems not being required for Windows compliant UCRT64 build:
+    # - UCTR64 generates Windows executables not relying on MSYS DLLs. Thus -static-libxxx
+    #   seems to be superfluous. 
+    #target_link_options(UVSC64Mock PRIVATE -static-libgcc -static-libstdc++)
+    target_link_options(UVSC64Mock PRIVATE)
 endif()
