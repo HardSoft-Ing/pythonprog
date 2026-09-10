@@ -37,12 +37,18 @@ def dbg_break_callfunc(arg_f, *argv):
 
 # --------------------------------- Test-Code ----------------------------------
 
+try:
+    IFX_UVSCDLL90_PATH = os.environ['SysDevToolPath']+r'SDK90\UV4\UVSC.dll'
+    
+except Exception:
+    IFX_UVSCDLL90_PATH =  os.path.dirname(os.path.abspath(__file__)) + '/uvctrl/keil_uvsc/UVSC64Mock.dll'
+    
 
-IFX_UVSCDLL90_PATH = os.environ['SysDevToolPath']+r'SDK90\UV4\UVSC.dll'
 uvctrl = LibUvCtrl(IFX_UVSCDLL90_PATH)
+       
 
 # Call uvsc_init() with default IP port.
-dbg_break_callfunc(uvctrl.uvsc_init, IFX_UVSCPORT, True)
+dbg_break_callfunc(uvctrl.uvsc_init, IFX_UVSCPORT, UVSC_MAX_AUTO_PORT, True)
 dbg_break_callfunc(uvctrl.uvsc_dbg_enter)
 dbg_break_callfunc(uvctrl.uvsc_dbg_start_execution)
 # A 2'nd call of uvsc_dbg_start_execution() should not fail

@@ -16,7 +16,7 @@ class SSTR(Structure):
                 ("szStr", c_char_p)]
 
 # --- UVSock struct EXECCMD
-class EXECCMD(Structure)
+class EXECCMD(Structure):
     _fields_ = [("bEcho", c_int, 1),
                 ("_pad0_", c_int, 31),
                 ("nRes", c_int, 7),

@@ -638,4 +638,5 @@ class  UVSC_CB_DATA (Union):
 # Callback function type
 # typedef void (*uvsc_cb)(void* cb_custom, UVSC_CB_TYPE type, UVSC_CB_DATA *data);
 uvsc_cb_t = CFUNCTYPE(None, c_void_p, UVSC_CB_TYPE, POINTER(UVSC_CB_DATA))
+# uvsc_cb_t: ctypes._CFunctionType = CFUNCTYPE(None, c_void_p, UVSC_CB_TYPE, POINTER(UVSC_CB_DATA))
 log_cb_t  = CFUNCTYPE(None, c_char_p, c_int);
