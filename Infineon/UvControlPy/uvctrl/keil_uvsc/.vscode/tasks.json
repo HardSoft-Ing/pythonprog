@@ -7,9 +7,9 @@
             "command": "cmake",
             "args": [
                 "-S",
-                "Infineon",
+                ".",
                 "-B",
-                "Infineon/build/uvsc64",
+                "build/uvsc64",
                 "-G",
                 "Ninja",
                 "-DCMAKE_BUILD_TYPE=Debug",
@@ -34,7 +34,7 @@
             "dependsOn": "CMake: Configure UVSC64Mock Debug",
             "args": [
                 "--build",
-                "Infineon/build/uvsc64",
+                "build/uvsc64",
                 "--config",
                 "Debug",
                 "--parallel"
@@ -61,7 +61,7 @@
             "command": "cmake",
             "args": [
                 "--build",
-                "Infineon/build/uvsc64",
+                "build/uvsc64",
                 "--target",
                 "clean"
             ],

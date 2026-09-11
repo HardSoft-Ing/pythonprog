@@ -5,11 +5,11 @@ set(CMAKE_CXX_COMPILER "g++" CACHE STRING "UCRT64 G++ compiler")
 project(UVSC64Mock LANGUAGES CXX)
 
 add_library(UVSC64Mock SHARED
-    UvControlPy/uvctrl/keil_uvsc/UVSC64Mock.cpp
+    UVSC64Mock.cpp
 )
 
 target_include_directories(UVSC64Mock PRIVATE
-    UvControlPy/uvctrl/keil_uvsc
+    .
 )
 
 target_compile_definitions(UVSC64Mock PRIVATE WIN32)
@@ -17,8 +17,8 @@ target_compile_definitions(UVSC64Mock PRIVATE WIN32)
 set_target_properties(UVSC64Mock PROPERTIES
     OUTPUT_NAME "UVSC64Mock"
     PREFIX ""
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/UvControlPy/uvctrl/keil_uvsc"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/UvControlPy/uvctrl/keil_uvsc"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}"
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
 
