@@ -26,9 +26,8 @@ if(MSVC)
     target_compile_options(UVSC64Mock PRIVATE /W4)
 else()
     target_compile_options(UVSC64Mock PRIVATE -Wall -Wextra)
-    # TODO::fschaitb: Seems not being required for Windows compliant UCRT64 build:
-    # - UCTR64 generates Windows executables not relying on MSYS DLLs. Thus -static-libxxx
-    #   seems to be superfluous. 
+    # Note: UCTR64 generates Windows executables not relying on MSYS DLLs. Thus -static-libxxx
+    # seems not to be necessary. But if this DLL should ever be run on Win-PCs without MSYS we shall
+    # use the -static-libxxx link flags to link all required DLLs into this DLL.
     #target_link_options(UVSC64Mock PRIVATE -static-libgcc -static-libstdc++)
-    target_link_options(UVSC64Mock PRIVATE)
 endif()
