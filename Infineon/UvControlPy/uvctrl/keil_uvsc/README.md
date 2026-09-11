@@ -35,12 +35,16 @@ The UCRT64 tools are expected under `C:/Tools/msys64/ucrt64/bin`.
 
 ## C++ debugging alongside Python
 
-1. Start the Python debugger for `UvControlPy/test_uvctrl.py` and stop at a breakpoint after the mock DLL has been loaded.
-2. Open the C++ Run and Debug view for this target and select `(gdb) Attach`.
+1. Set a breakpoint in your python module **_after the mock DLL_** has been loaded by `ctypes`, then start the Python debugger for `UvControlPy/test_uvctrl.py` and run it to that stop!
+2. Open a 2'nd _Vs Code_ within the C++ DLL project, then open _Run and Debug_ view and select `(gdb) Attach` from drop-box on top.
 3. In the process picker, select the Python process that has `UVSC64Mock.dll` loaded. If several Python processes exist, identify it with:
-
-   ```bash
+   ```shell 
+   # In cmd shell
    tasklist.exe /m UVSC64Mock.dll
+   ```
+   ```bash   
+   # In bash shell (needs escaping '/')
+   tasklist.exe //m UVSC64Mock.dll
    ```
 
 4. Continue or set C++ breakpoints in `UVSC64Mock.cpp`.
