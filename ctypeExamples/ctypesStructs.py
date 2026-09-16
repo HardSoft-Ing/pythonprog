@@ -1,14 +1,6 @@
 from ctypes import *
 import ctypes
 # --- Load shared libc for Winodws or Linux
-import sys
-if sys.platform == "win32":
-    # libc of Windows
-    libc = cdll.msvcrt 
-else:    
-    # libc of Linux
-    libc = CDLL('libc.so.6')
-
 # Structs shall be derived from cytpes "Structure"
 
 class POINT(Structure):

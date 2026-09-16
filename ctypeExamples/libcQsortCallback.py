@@ -6,7 +6,10 @@ from ctypes import *
 import sys
 if sys.platform == "win32":
     # libc of Windows
-    libc = cdll.msvcrt 
+    # Load libc short-form form Windows
+    #libc = cdll.msvcrt 
+    # Load libc as literal dll-file name (same as cdll.msvcrt) 
+    libc = CDLL('msvcrt.dll')
 else:    
     # libc of Linux
     libc = CDLL('libc.so.6')
@@ -16,16 +19,22 @@ qsort = libc.qsort
 qsort.restype = None
 
 
-# This is an explicit array-type definition for e.g. c_int: 
-## 1. define array-type IntArray8
-#IntArray8 = c_int * 8;
-## 2. create array-instance of IntArray8 initialized by values. 
-#iarr = IntArray8(5, 1, 7, 5, 5, 7, 33, 99)
+# Explicit ctypes array-type definitions for c_uint elements.
+UintArr8_t = c_uint * 8
+UintArr10_t = c_uint * 10
+print (f"# Array-type-length UintArr8_t: {UintArr8_t._length_}, UintArr10_t: {UintArr10_t._length_}")
+# Instantiate uint-arrays:
+uint8Vals = UintArr8_t(18,28,38,48,58)
+uint10Vals = UintArr10_t(11,22,33,44,55,66,7,88,99,100)
+print (f"# Instance uint8Vals len: {len(uint8Vals)}, uint8Vals len: {len(uint10Vals)}")
 
-
-
-# Define c_int array with 8 elements. 
-iarr = (c_int * 10)(5, 1, 7, 5, 5, 7, 33, 99);
+# Make immediate c_int array-instance without explicit array-type definition: 
+## 1. Implicit defines array-type IntArrayXX
+#IntArrayXX = c_int * XX;
+## 2. create array-instance of IntArrayXX initialized by values. 
+#iarr = IntArrayXX(5, 1, 7, 5, 5, 7, 33, 99)
+# Define c_int array with 10 elements, filled by 8 values. 
+iarr = (c_int * 10)(5, 1, 7, 5, 5, 7, 33, 99)
 # Get element count of iarr via len().
 cnt_iarr =  len(iarr);
 
