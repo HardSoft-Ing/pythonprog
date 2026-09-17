@@ -64,14 +64,15 @@ def simple_decorator(func):
 @simple_decorator
 def greet():
     print("# Hello!")
-
 greet()
+
 # None decorator syntax with same result. 
-def greetnew():
+def greet_undec():
     print("# New Hello!")
-# Reusing func-name greetnew() (just to be close the decorator syntax) overrides the first definition 
-# of greetnew(): It seems the is done by the decorator pattern @xxxfunc().
-greetnew=simple_decorator(greetnew)
-greetnew()
+# Reusing func-name greetnew() overrides the first definition of greetnew() as done by the 
+# decorator pattern @xxxfunc().
+greet_undec=simple_decorator(greet_undec)
+greet_undec()
+
 
 
