@@ -15,9 +15,14 @@ class Bar(Structure):
     _fields_ = [("count", c_int), ("values", POINTER(c_int))]
 
 bar = Bar()
-# Create c_int array:
-# - define array-type consisting of 3 c_int elements.
+# Create c_int Array-Types of fixed element-size (e.g. 3, 5):
+# Note: c_int defines the operator-overloads:
+# - (c_int * x): c_int.__mul__()
+# - (x * c_int): c_int.__rmul__()
 TypeArr3 = (c_int * 3)
+TypeArr5 = (5 * c_int)
+print(f"Types {TypeArr3.__name__}: {TypeArr3}, {TypeArr5.__name__}: {TypeArr5}") 
+
 # - create array instance from TypeArr3 initialized by values.
 intArr = TypeArr3(1, 2, 3);
 print("intArr:", intArr);

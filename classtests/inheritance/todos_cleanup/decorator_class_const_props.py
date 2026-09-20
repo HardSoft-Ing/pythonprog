@@ -29,6 +29,7 @@ class Math(object):
 
     @property
     def pi(self):
+        print("In")
         return self._pi
 
     @pi.setter
