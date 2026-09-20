@@ -2,8 +2,31 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Clear CMake build",
+            "type": "shell",
+            "command": "cmd",
+            "args": [
+                "/d",
+                "/c",
+                "rmdir /s /q build"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "PATH": "C:/Tools/msys64/ucrt64/bin;C:/Tools/msys64/usr/bin;${env:PATH}"
+                },
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": ["/d", "/c"]
+                }
+            },
+            "hide": true,
+            "problemMatcher": []
+        },
+        {
             "label": "CMake: Configure UVSC64Mock Debug",
             "type": "shell",
+            "dependsOn": "Clear CMake build",
             "command": "cmake",
             "args": [
                 "-S",

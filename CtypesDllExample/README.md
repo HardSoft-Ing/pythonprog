@@ -1,4 +1,4 @@
-# Infineon UVSC Python/C++ Integration
+# CtypesDllExample UVSC Python/C++ Integration
 
 This directory contains the Python wrapper used to control a Keil uVision debugger through the UVSC API.
 
@@ -14,11 +14,11 @@ This directory contains the Python wrapper used to control a Keil uVision debugg
 
 ## Python usage
 
-Run the example test from the `Infineon` directory or from the repository root:
+Run the example test from the `CtypesDllExample` directory or from the repository root:
 
 ```bash
 python UvControlPy/test_uvctrl.py
-python Infineon/UvControlPy/test_uvctrl.py
+python CtypesDllExample/UvControlPy/test_uvctrl.py
 ```
 
 The test expects a reachable Keil uVision/UVSC service when using the real `UVSC.dll`. With the mock DLL, it exercises the wrapper API locally but does not provide a real uVision connection.
