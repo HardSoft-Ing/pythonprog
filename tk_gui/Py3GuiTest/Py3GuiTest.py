@@ -9,7 +9,8 @@
  and code inside the callback subroutines will be round-tripped.
  The 'main' function is reserved.
 """
-
+# Imports and INLINES 'tkinter.*' so that package-namespace 'tkinter.' can be omitted. 
+# E.g. instead of tkinter.Tk() we use Tk().
 from tkinter import *
 from Py3GuiTest_ui import Py3GuiTest
 
@@ -27,14 +28,14 @@ class CustomPy3GuiTest(Py3GuiTest):
     #
     # Callback to handle _button_1 widget option -command
     def _button_1_command(self, *args):
-        pass
+        print(f"Button-Callback args: {args}")
 
     # _checkbutton_1_command --
     #
     # Callback to handle _checkbutton_1 widget option -command
     def _checkbutton_1_command(self, *args):
-        pass
-
+        print(f"CheckButton-Callback args: {args}")
+        
     # END CALLBACK CODE
 
     # BEGIN USER CODE class
@@ -46,6 +47,7 @@ def main():
     # DO NOT EDIT
     try: userinit()
     except NameError: pass
+    # Create a Panel
     root = Tk()
     demo = CustomPy3GuiTest(root)
     root.title('Py3GuiTest')

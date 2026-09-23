@@ -38,7 +38,7 @@ print(propdec.x);
 
 
 # Simulates decorator code-expansion of example `PropByDecor` without decorator-op '@'.
-# Note: Just a deep-dive of how the '@property' stuff actually works.
+# Note: NOT senseful but just a deep-dive of how the '@property' syntax actually expands.
 class PropByDecorSim:
     def __init__(self,in_x):
         self._x = in_x

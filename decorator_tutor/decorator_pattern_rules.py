@@ -1,18 +1,66 @@
 ###
-# The following explains by examples with simple to deep nested decorator func.-hierarchies 
-# how the operator "@" of a decorator-expression "@decorator_func" works. 
-# Note, that 
-# - @decorator_func 
-#   def somefunc(): 
-#       ...code-body...  
-# is ALWAYS expanded to the ivokation.
-# - somefunc= decorator_func(somefunc)'
+# The following explains how a decorator-expression "@decorator_symbol" for functions 
+# or classes is expanded.
 #
-# In case of decorator_func(somearg) expects not arg. 'somefunc()' but has nested wrappers where at least one
-# of them must accept 'somefunc()' we need to add "(...)" per nested function until we reach the nested 
-# function expecting 'somefunc' as argument. 
-# - @decorator_func(...)-(...)
+# - If we have given `decorator_sym` for functions or classes as follows:
+#   > def decorator_sym(dec_func):
+#     ...
+#   > class decorator_sym(dec_cls):
+#     ...
+# - then the given decorator patterns:
+#   > @decorator_sym 
+#     def somefunc(): 
+#         ...code...  
+#   > @decorator_sym 
+#     class someclass(): 
+#           ...code...  
+# - expands to expression:
+#   > somefunc = decorator_sym(somefunc)'
+#   > somecls  = decorator_sym(somecls)'
 #
+#   Note: The original somefunc/somecls definition is captured and conserved by decorator_sym().
+#   Then decorator_sym() returns a modified function/class and overwrites original somefunc/somecls! 
+#   This results into call-chain:
+#   > decorator_func(somefunc) => return new-somefunc
+#   > decorator_cls(somecls) => gets derived-somecls
+#
+#
+#
+# The following explains how a decorator-expression "@decorator_symbol(arg1, arg2)" for functions 
+# or classes is expanded.
+#
+# - If we have given `decorator_sym` for functions or classes as follows:
+#   > def decorator_sym(arg1,arg2):
+#         ...
+#         def decorator_func(dec_func):
+#         ...
+#   > def decorator_sym(arg1,arg2):
+#         ...
+#         class decorator_cls(dec_cls):
+#         ...
+# - then the given decorator patterns:
+#   > @decorator_sym("Hello", 10) 
+#     def somefunc(): 
+#         ...code...  
+#   > @decorator_sym("Hello", 10) 
+#     class someclass(): 
+#           ...code...  
+# - expands to expression:
+#   > somefunc= decorator_sym("Hello", 10)(somefunc)'
+#   > somecls= decorator_sym("Hello", 10)(somecls)'
+#
+#   Note: We explicit need to add call-expression '("Hello", 10)' to @decorator_sym. Due to 
+#   decorator operator '@' a final call-expression '(somefunc)/(somecls)' again get implicit added.
+#   This results into call-chain:
+#   > decorator_sym("Hello", 10) return decorator_func => decorator_func(somefunc) => return new-somefunc
+#   > decorator_sym("Hello", 10) return decorator_cls => decorator_cls(somecls) => gets derived-somecls
+#
+# Note:
+# This call-chain mechanism supports any level of nested sub-functions within decorator_sym() where usually only
+# 2 levels makes sense for to parametrize decorator_sym().
+#
+# Below find some experimental code for to do a deep-dive.          
+
 
 
 g_pandas = "Pandas"

@@ -1,4 +1,4 @@
-import Tkinter as tk
+import tkinter as tk
 from time import sleep
 
 class Application(tk.Frame):
