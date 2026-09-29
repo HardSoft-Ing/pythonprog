@@ -1,0 +1,8 @@
+{
+    "cmake.sourceDirectory": "C:/Users/fs/programming/pythonprog/ctypesDllExample/UvControlPy/uvctrl/keil_uvsc",
+    "python.testing.pytestArgs": [
+        "testing"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}

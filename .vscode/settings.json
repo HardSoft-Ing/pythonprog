@@ -7,5 +7,10 @@
     },
     "cSpell.words": [
         "ctypes"
-    ]
+    ],
+    "python.testing.pytestArgs": [
+        "ctypesDllExample"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }
