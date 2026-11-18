@@ -20,7 +20,9 @@ def _dll_path() -> Path:
         return Path(configured_path)
     return MOCK_DLL_PATH
 
-
+# The fixture can be a function or a generator (what we are using), since
+# pytest analyzes which one we use.
+# Common advantage with generator-fixtures: We can add a clean-up part!!!
 @pytest.fixture
 def uvctrl():
     dll_path = _dll_path()
@@ -29,7 +31,7 @@ def uvctrl():
 
     controller = LibUvCtrl(str(dll_path))
     yield controller
-
+    # Cleanup part called when testing-function is done
     if controller.cint_uvscHandle.value != -1:
         controller.uvsc_close_connection()
 
@@ -57,3 +59,18 @@ def test_debug_command_lifecycle(uvctrl):
     )
 
     uvctrl.uvsc_dbg_exit()
+
+# Defined 2'nd function just to watch the fixture's yield cleanup behavior. 
+def test_debug_command_lifecycle2(uvctrl):
+    uvctrl.uvsc_init(IFX_UVSCPORT, UVSC_MAX_AUTO_PORT, True)
+    assert uvctrl.cint_uvscHandle.value != -1
+
+    uvctrl.uvsc_dbg_enter()
+    assert uvctrl.uvsc_dbg_getstatus() == 0
+
+    uvctrl.uvsc_dbg_start_execution()
+    assert uvctrl.uvsc_dbg_getstatus() == 1
+
+    uvctrl.uvsc_dbg_stop_execution()
+
+    uvctrl.uvsc_dbg_exit()    
